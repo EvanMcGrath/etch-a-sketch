@@ -8,15 +8,44 @@ function gridSizer(val) {
         for (i=0; i < (val*val); i++) {
                 let gridDiv = document.createElement("div");
                 gridContent.appendChild(gridDiv);
-        }
+        };
+
+        
+        // gridDivs.forEach((item) => {item.classList.add("gridDivBorder")});
+
+
+        gridContent.style.gridTemplateColumns = `repeat(${val}, 1fr)`;
+        gridContent.style.gridTemplateRows = `repeat(${val}, 1fr)`;
+
+
+
+        let mouseIsDown = false;
+        let gridDivs = gridContent.querySelectorAll("div");
+        gridDivs.forEach((item) => {
+                item.addEventListener("mousedown", () => {mouseIsDown = true});
+                item.addEventListener("mouseup", ()=> {mouseIsDown = false});
+                item.addEventListener("mousemove", (e) => {
+                        if(!mouseIsDown) {
+                                return
+                        } else {
+                                e.target.classList.add("gridBlackFill");
+                        }
+                })
+        })
+
+        gridContent.addEventListener("mouseleave", () => {mouseIsDown = false});
+
 }
 
 
 
-let gridInput = document.getElementById("gridSizer");
-gridInput.addEventListener("input", () => {
-       let inputVal = document.getElementById('gridSizer').value;
 
+let rangeInput = document.getElementById("gridSizer");
+rangeInput.addEventListener("input", () => {
+
+       gridContent.replaceChildren();
+        
+       let inputVal = document.getElementById('gridSizer').value;
        gridSizer(inputVal);
 
 })
@@ -24,8 +53,6 @@ gridInput.addEventListener("input", () => {
 
 
 
-let gridDivs = gridContent.querySelectorAll("div");
-gridDivs.forEach((item) => {item.classList.add("gridDivBorder")});
 
 
 
@@ -40,6 +67,27 @@ gridDivs.forEach((item) => {item.classList.add("gridDivBorder")});
 
 
 
+
+
+
+
+
+
+
+// let gridDivs = gridContent.querySelectorAll('div');
+
+// let mouseIsDown = false;
+// gridDivs.forEach((item) => {
+//         item.addEventListener("mousedown", () => {mouseIsDown = true});
+//         item.addEventListener("mouseup", ()=> {mouseIsDown = false});
+//         item.addEventListener("mousemove", (e) => {
+//                 if(!mouseIsDown) {
+//                         return
+//                 } else {
+//                         e.target.classList.add("gridBlackFill");
+//                 }
+//         })
+// })
 
 
 
