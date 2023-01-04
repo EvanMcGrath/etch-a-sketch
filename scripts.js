@@ -3,8 +3,7 @@ let inputVal = document.getElementById("gridSizer").value;
 let colourVal = document.getElementById("colourPicker").value;
 
 gridSizer(inputVal);
-gridColourizer(colourVal);
-
+  
 function gridSizer(val) {
         for (i = 0; i < val * val; i++) {
                 let gridDiv = document.createElement("div");
@@ -14,21 +13,6 @@ function gridSizer(val) {
         gridContent.style.gridTemplateColumns = `repeat(${val}, 1fr)`;
         gridContent.style.gridTemplateRows = `repeat(${val}, 1fr)`;
 
-}
-
-
-let sizeInput = document.getElementById("gridSizer");
-sizeInput.addEventListener("input", () => {
-        gridContent.replaceChildren();
-
-        let inputVal = document.getElementById("gridSizer").value;
-        
-        
-        gridSizer(inputVal);
-});
-
-
-function gridColourizer(val) {
         let mouseIsDown = false;
         let gridDivs = gridContent.querySelectorAll("div");
         gridDivs.forEach((item) => {
@@ -42,11 +26,10 @@ function gridColourizer(val) {
                         if (!mouseIsDown) {
                                 return;
                         } else {
-                                e.target.style.backgroundColor = `${val}`;
+                                e.target.style.backgroundColor =  colourVal;
                         }
                 });
         });
-
 
         gridContent.addEventListener("mouseenter", () => {
                 mouseIsDown = false;
@@ -54,14 +37,22 @@ function gridColourizer(val) {
         gridContent.addEventListener("mouseleave", () => {
                 mouseIsDown = false;
         });
+
 }
 
-let colourInput = document.getElementById("colourPicker");
-colourInput.addEventListener("input", () => {
-        let inputVal = document.getElementById("colourPicker").value;
-        console.log(inputVal);
-        gridColourizer(inputVal);
-})
+
+//Event listeners to change gridsize and gridcolour
+document.getElementById("gridSizer").addEventListener("input", () => {
+        gridContent.replaceChildren();
+        inputVal = document.getElementById("gridSizer").value;      
+        gridSizer(inputVal);
+});
+
+
+document.getElementById("colourPicker").addEventListener("input", () => {
+        colourVal = document.getElementById("colourPicker").value;
+});
+
 
 function randomColourizer() {
         return "#" + Math.floor(Math.random() * 16777216).toString(16);
@@ -70,22 +61,4 @@ function randomColourizer() {
 
 
 
-// let gridDivs = gridContent.querySelectorAll('div');
 
-// let mouseIsDown = false;
-// gridDivs.forEach((item) => {
-//         item.addEventListener("mousedown", () => {mouseIsDown = true});
-//         item.addEventListener("mouseup", ()=> {mouseIsDown = false});
-//         item.addEventListener("mousemove", (e) => {
-//                 if(!mouseIsDown) {
-//                         return
-//                 } else {
-//                         e.target.classList.add("gridBlackFill");
-//                 }
-//         })
-// })
-
-//for (i = 0; i < (16*16); i++) {
-//        let gridDiv = document.createElement("div");
-//        gridContent.appendChild(gridDiv);
-//}
